@@ -6,7 +6,7 @@
 #include <ctype.h>
 #define MAX 26
 #define HASH(ch) ((int)tolower(ch) - 97)
-#define CHECK_KEY(key) ((97 <= key && key <= 122) ? true : false)
+#define CHECK_KEY(key) ((0 <= key && key <= 26) ? true : false)
 
 
 // Custom struct representing the node of a trie.

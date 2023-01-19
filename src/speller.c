@@ -30,7 +30,7 @@ bool load_dictionary(const char *file_path) {
 		buffer[strlen(buffer) - 1] = '\0';
 
 		// Add word in the trie. If failure occurs, then return false.
-		if (!add_word(buffer) )
+		if (!add_word(buffer) ) 
 			return false;
 	}
 	fclose(dict);
@@ -55,11 +55,14 @@ bool spell_check(const char *file_path) {
 	// Spell check every word in the text file.
 	while (!feof(text) ) {
 		// Read a word.
-		fgets(buffer, BUFFER_SIZE, text);
+		if (!fscanf(text, "%1023s", buffer) )
+			return false;
 
 		// If word is incorrect, then report it.
-		if (!search(buffer) )
-			fputs(buffer, text);
+		if (!search(buffer) ) {
+			fputs(buffer, report);
+			fputs("\n", report);
+		}
 	}
 
 	fclose(text);
