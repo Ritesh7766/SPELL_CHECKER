@@ -1,6 +1,7 @@
 // Author - Ritesh Saha
 
 #include <stdlib.h>
+#include <string.h>
 #include "trie.h"
 
 // The root node of the trie
@@ -54,9 +55,9 @@ Node* create_node(void) {
 /*
 	Add a word in the trie.
 */
-bool add_word(const char *word, const int length) {
+bool add_word(const char *word) {
 	Node *trev = ROOT;
-	for (int i = 0; i < length; i++) {
+	for (int i = 0, length = strlen(word); i < length; i++) {
 		// Generate a key.
 		int key = HASH(word[i]);
 		// If the path dosen't exists, then create one.
@@ -65,7 +66,8 @@ bool add_word(const char *word, const int length) {
 			// If memory allocation fails, then return false. [Failure may occur due to insufficient memory]
 			if (new_node == NULL)
 				return false;
-			trev->map[key] = create_node();
+			// Other add if to the pointer.
+			trev->map[key] = new_node;
 		}
 		// Follow the path.
 		trev = trev->map[key];
@@ -78,9 +80,9 @@ bool add_word(const char *word, const int length) {
 /*
 	Remove a word from the trie. Note that we not deallocating any memory.
 */
-bool remove_word(const char *word, const int length) {
+bool remove_word(const char *word) {
 	Node *trev = ROOT;
-	for (int i = 0; i < length; i++) {
+	for (int i = 0, length = strlen(word); i < length; i++) {
 		// Generate a key.
 		int key = HASH(word[i]);
 		// If path doesn't exists, then return false.
@@ -96,9 +98,9 @@ bool remove_word(const char *word, const int length) {
 /*
 	Search a word in the trie.
 */
-bool search(const char *word, const int length) {
+bool search(const char *word) {
 	Node *trev = ROOT;
-	for (int i = 0; i < length; i++) {
+	for (int i = 0, length = strlen(word); i < length; i++) {
 		// Generate a key.
 		int key = HASH(word[i]);
 		// If path dosen't exists, then return false.

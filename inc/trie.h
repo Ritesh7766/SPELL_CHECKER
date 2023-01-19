@@ -19,8 +19,8 @@ Node* init(void);
 Node* create_node(void);
 void destroy(void);
 void __destroy(Node*);
-bool add_word(const char *word, const int length);
-bool remove_word(const char *word, const int length);
-bool search(const char *word, const int length);
+bool add_word(const char *word);
+bool remove_word(const char *word);
+bool search(const char *word);
 
 #endif // _TRIE_H_
