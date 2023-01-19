@@ -42,9 +42,11 @@ void __destroy(Node *const node) {
 */
 Node* create_node(void) {
 	Node *node = (Node*)malloc(sizeof(Node) );
+	
 	// If memory allocation fails, then return NULL. [Failure may occur due to insufficient memory]
 	if (node == NULL)
 		return NULL;
+
 	// Otherwise initialize the node and return its address.
 	node->EOW = false;
 	for (int i = 0; i < MAX; i++)
@@ -60,18 +62,26 @@ bool add_word(const char *word) {
 	for (int i = 0, length = strlen(word); i < length; i++) {
 		// Generate a key.
 		int key = HASH(word[i]);
+
+		// Check key range.
+		if (!CHECK_KEY(key) ) return false;
+
 		// If the path dosen't exists, then create one.
 		if (trev->map[key] == NULL) {
 			Node *new_node = create_node();
+
 			// If memory allocation fails, then return false. [Failure may occur due to insufficient memory]
 			if (new_node == NULL)
 				return false;
+
 			// Other add if to the pointer.
 			trev->map[key] = new_node;
 		}
+
 		// Follow the path.
 		trev = trev->map[key];
 	}
+
 	// Mark the end of word.
 	trev->EOW = true;
 	return true;
@@ -85,9 +95,14 @@ bool remove_word(const char *word) {
 	for (int i = 0, length = strlen(word); i < length; i++) {
 		// Generate a key.
 		int key = HASH(word[i]);
+
+		// Check key range.
+		if (!CHECK_KEY(key) ) return false;
+
 		// If path doesn't exists, then return false.
 		if (trev->map[key] == NULL)
 			return false;
+
 		// Otherwise, follow the path.
 		trev = trev->map[key];
 	}
@@ -103,9 +118,14 @@ bool search(const char *word) {
 	for (int i = 0, length = strlen(word); i < length; i++) {
 		// Generate a key.
 		int key = HASH(word[i]);
+
+		// Check key range.
+		if (!CHECK_KEY(key) ) return false;
+
 		// If path dosen't exists, then return false.
 		if (trev->map[key] == NULL)
 			return false;
+
 		// Otherwise, follow the path.
 		trev = trev->map[key];
 	}

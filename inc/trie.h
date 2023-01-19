@@ -2,10 +2,11 @@
 
 #ifndef _TRIE_H_
 #define _TRIE_H_
-#define MAX 26
 #include <stdbool.h>
 #include <ctype.h>
+#define MAX 26
 #define HASH(ch) ((int)tolower(ch) - 97)
+#define CHECK_KEY(key) ((97 <= key && key <= 122) ? true : false)
 
 
 // Custom struct representing the node of a trie.
