@@ -3,8 +3,10 @@
 #ifndef _TRIE_H_
 #define _TRIE_H_
 #define MAX 26
-#define HASH(ch) ((int)ch - 97)
 #include <stdbool.h>
+#include <ctype.h>
+#define HASH(ch) ((int)tolower(ch) - 97)
+
 
 // Custom struct representing the node of a trie.
 typedef struct Node {

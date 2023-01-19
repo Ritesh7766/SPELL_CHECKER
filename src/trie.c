@@ -60,18 +60,18 @@ bool add_word(const char *word, const int length) {
 		// Generate a key.
 		int key = HASH(word[i]);
 		// If the path dosen't exists, then create one.
-		if (trev.map[key] == NULL) {
+		if (trev->map[key] == NULL) {
 			Node *new_node = create_node();
 			// If memory allocation fails, then return false. [Failure may occur due to insufficient memory]
 			if (new_node == NULL)
 				return false;
-			trev.map[key] = create_node();
+			trev->map[key] = create_node();
 		}
 		// Follow the path.
-		trev = trev.map[key];
+		trev = trev->map[key];
 	}
 	// Mark the end of word.
-	trev.EOW = true;
+	trev->EOW = true;
 	return true;
 }
 
@@ -84,12 +84,12 @@ bool remove_word(const char *word, const int length) {
 		// Generate a key.
 		int key = HASH(word[i]);
 		// If path doesn't exists, then return false.
-		if (trev.map[key] == NULL)
+		if (trev->map[key] == NULL)
 			return false;
 		// Otherwise, follow the path.
-		trev = trev.map[key];
+		trev = trev->map[key];
 	}
-	trev.EOW = false;
+	trev->EOW = false;
 	return true;
 }
 
@@ -101,7 +101,11 @@ bool search(const char *word, const int length) {
 	for (int i = 0; i < length; i++) {
 		// Generate a key.
 		int key = HASH(word[i]);
-		
+		// If path dosen't exists, then return false.
+		if (trev->map[key] == NULL)
+			return false;
+		// Otherwise, follow the path.
+		trev = trev->map[key];
 	}
-	return true;
+	return trev->EOW;
 }
